@@ -6,7 +6,7 @@ services:
             context: ./versions/${VERSION:-latest}/${PLATFORM_ARCH:-amd64}
             args:
                 - TARGET_PLATFORM_ARCH=${PLATFORM_ARCH:-amd64}
-        image: verysync:latest
+        image: zbinlin/verysync:latest
         ports:
             - "8886:8886"
             - "22330:22330"
