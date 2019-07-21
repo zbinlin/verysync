@@ -1,6 +1,29 @@
 # verysync Dockerfile
 
-Version: **v1.0.4**
+### Versions (TARGET_VERSION)
+
+* v1.0.4
+* v1.0.5
+* v1.1.1
+* v1.1.2
+
+### Target Platform OS (TARGET_PLATFORM_OS)
+
+* linux
+
+### Target Platform Arch (TARGET_PLATFORM_ARCH)
+
+* 386
+* amd64
+* arm
+* arm6
+* arm7
+* arm64
+
+### More Information
+
+http://releases-cdn.verysync.com/releases/{VERSION}/
+
 
 ## 注意
 
@@ -16,7 +39,11 @@ git clone https://github.com/zbinlin/verysync.git
 cd verysync
 
 # 直接运行
-docker build -t verysync -f versions/latest/amd64/Dockerfile
+docker build --build-arg \
+	"TARGET_VERSION=v1.1.2" \
+	"TARGET_PLATFORM_OS=linux" \
+	"TARGET_PLATFORM_ARCH=amd64" \
+	-t verysync .
 docker run --mount "type=mount,source=./data,target=/app/var" \
 	--ports "8886:8886" \
 	--ports "22330:22330" \

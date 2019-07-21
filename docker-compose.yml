@@ -3,9 +3,11 @@ version: "3.2"
 services:
     verysync:
         build:
-            context: ./versions/${VERSION:-latest}/${PLATFORM_ARCH:-amd64}
+            context: ./Dockerfile
             args:
-                - TARGET_PLATFORM_ARCH=${PLATFORM_ARCH:-amd64}
+                - TARGET_VERSION=${TARGET_VERSION:-v1.1.2}
+                - TARGET_PLATFORM_OS=${TARGET_PLATFORM_OS:-linux}
+                - TARGET_PLATFORM_ARCH=${TARGET_PLATFORM_ARCH:-amd64}
         image: zbinlin/verysync:latest
         ports:
             - "8886:8886"

@@ -1,23 +1,27 @@
 FROM alpine:latest
 
-ARG VERSION="v1.0.5"
-ARG TARGET_PLATFORM_OS="linux"
-ARG TARGET_PLATFORM_ARCH="arm"
+RUN echo https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.10/main > /etc/apk/repositories; \
+    echo https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.10/community >> /etc/apk/repositories
 
-LABEL version=${VERSION}
+RUN apk add --no-cache tzdata && \
+    ln -fsT /usr/share/zoneinfo/PRC /etc/localtime && \
+    echo "PRC" > /etc/timezone
+
+ARG TARGET_VERSION
+ARG TARGET_PLATFORM_OS="linux"
+ARG TARGET_PLATFORM_ARCH="amd64"
+
+LABEL version=${TARGET_VERSION}
 LABEL platform="${TARGET_PLATFORM_OS}/${TARGET_PLATFORM_ARCH}"
 LABEL author="Colin Cheng <zbinlin@outlook.com>"
 LABEL note="由于微力没有开放源代码，因为该 Dockerfile 会从微力官方下载微力的二进制文件。由于没有源代码，因此对于该二进制文件的安全性持保留意见！"
 
 WORKDIR /app
 
-RUN apk add --no-cache tzdata && \
-    ln -fsT /usr/share/zoneinfo/PRC /etc/localtime
-
 RUN mkdir -p -- bin var tmp && \
-    wget -q "http://releases-cdn.verysync.com/releases/${VERSION}/verysync-${TARGET_PLATFORM_OS}-${TARGET_PLATFORM_ARCH}-${VERSION}.tar.gz" && \
-    tar xzvf verysync-${TARGET_PLATFORM_OS}-${TARGET_PLATFORM_ARCH}-${VERSION}.tar.gz --strip-components=1 -C tmp && \
-    mv tmp/verysync bin/ && rm -rf tmp verysync-${TARGET_PLATFORM_OS}-${TARGET_PLATFORM_ARCH}-${VERSION}.tar.gz
+    wget -q "http://releases-cdn.verysync.com/releases/${TARGET_VERSION}/verysync-${TARGET_PLATFORM_OS}-${TARGET_PLATFORM_ARCH}-${TARGET_VERSION}.tar.gz" && \
+    tar xzvf verysync-${TARGET_PLATFORM_OS}-${TARGET_PLATFORM_ARCH}-${TARGET_VERSION}.tar.gz --strip-components=1 -C tmp && \
+    mv tmp/verysync bin/ && rm -rf tmp verysync-${TARGET_PLATFORM_OS}-${TARGET_PLATFORM_ARCH}-${TARGET_VERSION}.tar.gz
 
 RUN adduser -h /app/var -D verysync
 
