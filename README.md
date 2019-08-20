@@ -32,27 +32,28 @@ http://releases-cdn.verysync.com/releases/{VERSION}/
 
 ## 使用
 
-首先需要安装 docker，如果使用 docker-compose 的话，需要安装 docker-compose 的最新版
+首先需要安装 docker（或者 podman），如果使用 docker-compose 的话，需要安装 docker-compose 的最新版
 
 ```bash
 git clone https://github.com/zbinlin/verysync.git
 cd verysync
 
-# 直接运行
-docker build --build-arg \
-	"TARGET_VERSION=v1.1.2" \
-	"TARGET_PLATFORM_OS=linux" \
-	"TARGET_PLATFORM_ARCH=amd64" \
-	-t verysync .
-docker run --mount "type=mount,source=./data,target=/app/var" \
-	--ports "8886:8886" \
-	--ports "22330:22330" \
-	--ports "443:443" \
-	--ports "22067:22067" \
-	--ports "22331:22331/udp" \
-	--ports "22027:22027/udp" \
-	--ports "22037:22037/udp" \
-	--name verysync verysync
+# 使用 docker 或 podman 直接构建并运行
+docker build \
+    --build-arg "TARGET_VERSION=v1.1.2" \
+    --build-arg "TARGET_PLATFORM_OS=linux" \
+    --build-arg "TARGET_PLATFORM_ARCH=amd64" \
+    -t zbinlin/verysync .
+docker run --mount "type=bind,source=./data,target=/app/var" \
+    --publish "8886:8886" \
+    --publish "22330:22330" \
+    --publish "443:443" \
+    --publish "22067:22067" \
+    --publish "22331:22331/udp" \
+    --publish "22027:22027/udp" \
+    --publish "22037:22037/udp" \
+    --publish "48691:48691/udp" \
+    --name zbinlin/verysync verysync
 
 # 使用 docker-compose 运行
 # 默认是使用 x86_64 平台上的，如何需要在 RaspberryPi 上运行，需要先
