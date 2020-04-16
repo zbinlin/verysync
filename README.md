@@ -7,6 +7,8 @@
 * v1.1.1
 * v1.1.3
 * v1.2.0
+* v1.3.1
+* v1.3.5
 
 ### Target Platform OS (TARGET_PLATFORM_OS)
 
@@ -39,12 +41,15 @@ http://releases-cdn.verysync.com/releases/{VERSION}/
 git clone https://github.com/zbinlin/verysync.git
 cd verysync
 
+
 # 使用 docker 或 podman 直接构建并运行
 docker build \
-    --build-arg "TARGET_VERSION=v1.2.0" \
+    --build-arg "TARGET_VERSION=v1.3.5" \
     --build-arg "TARGET_PLATFORM_OS=linux" \
     --build-arg "TARGET_PLATFORM_ARCH=amd64" \
     -t zbinlin/verysync .
+
+# 运行
 docker run --mount "type=bind,source=./data,target=/app/var" \
     --publish "8886:8886" \
     --publish "22330:22330" \
@@ -56,10 +61,15 @@ docker run --mount "type=bind,source=./data,target=/app/var" \
     --publish "48691:48691/udp" \
     --name zbinlin/verysync verysync
 
+
+# Or
 # 使用 docker-compose 运行
 # 默认是使用 x86_64 平台上的，如何需要在 RaspberryPi 上运行，需要先
 # export PLATFORM_ARCH=arm
 # 再运行下面的命令
+# 构建
 docker-compose build
+
+# 运行
 docker-compose up
 ```

@@ -4,7 +4,12 @@ LATEST_VERSION=`curl -sSfL 'http://releases-cdn.verysync.com/releases/' | grep -
 
 echo 1>&2 Latest Version: ${LATEST_VERSION}
 
-ARCH=amd64
+ARCH="$(uname -m)"
+case ${ARCH} in
+    i386)   ARCH="386" ;;
+    i686)   ARCH="386" ;;
+    x86_64) ARCH="amd64" ;;
+esac
 
 if command -v podman >/dev/null 2>&1;
 then
