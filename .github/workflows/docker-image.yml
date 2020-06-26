@@ -10,11 +10,14 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
+            - id: set-tag-name-into-env
+              run: echo "::set-env name=TAG_NAME::${GITHUB_REF##*/}"
             - name: Build the Docker image
               env:
+                  TARGET_VERSION=${{ env.TAG_NAME }}
                   TARGET_PLATFORM_OS: linux
                   TARGET_PLATFORM_ARCH: amd64
-              run: TARGET_VERSION="${GITHUB_REF##*/}" docker build . --file Dockerfile --tag "${GITHUB_REPOSITORY}"
+              run: docker build . --file Dockerfile --tag "${GITHUB_REPOSITORY}"
             - name: Login Docker Hub
               env:
                   DOCKER_USERNAME: ${{ github.repository_owner }}
@@ -22,5 +25,5 @@ jobs:
               run: echo -n "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin
             - name: Publish the Docker image
               run: |
-                  docker tag "${GITHUB_REPOSITORY}" "${GITHUB_REPOSITORY}":"${GITHUB_REF##*/}"
+                  docker tag "${GITHUB_REPOSITORY}" "${GITHUB_REPOSITORY}":"$TAG_NAME"
                   docker push "${GITHUB_REPOSITORY}"
