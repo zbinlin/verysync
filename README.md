@@ -1,4 +1,6 @@
-# verysync Dockerfile
+![Docker Image CI](https://github.com/zbinlin/verysync/workflows/Docker%20Image%20CI/badge.svg)
+
+# Verysync Dockerfile (**Unofficial**)
 
 ### Versions (TARGET_VERSION)
 
@@ -38,6 +40,18 @@ http://releases-cdn.verysync.com/releases/{VERSION}/
 
 首先需要安装 docker（或者 podman），如果使用 docker-compose 的话，需要安装 docker-compose 的最新版
 
+### 从 Hub.docker.com 拉取镜像
+
+```bash
+# 使用 Docker
+docker pull zbinlin/verysync:latest
+
+# 使用 podman
+podman pull zbinlin/verysync:latest
+```
+
+### 手动构建
+
 ```bash
 git clone https://github.com/zbinlin/verysync.git
 cd verysync
@@ -49,8 +63,12 @@ docker build \
     --build-arg "TARGET_PLATFORM_OS=linux" \
     --build-arg "TARGET_PLATFORM_ARCH=amd64" \
     -t zbinlin/verysync .
+```
 
-# 运行
+
+### 运行
+
+```bash
 docker run --mount "type=bind,source=./data,target=/app/var" \
     --publish "8886:8886" \
     --publish "22330:22330" \
