@@ -14,7 +14,7 @@ jobs:
               run: echo "::set-env name=TAG_NAME::${GITHUB_REF##*/}"
             - name: Build the Docker image
               env:
-                  TARGET_VERSION=${{ env.TAG_NAME }}
+                  TARGET_VERSION: ${{ env.TAG_NAME }}
                   TARGET_PLATFORM_OS: linux
                   TARGET_PLATFORM_ARCH: amd64
               run: docker build . --file Dockerfile --tag "${GITHUB_REPOSITORY}"
