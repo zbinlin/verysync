@@ -18,7 +18,7 @@ LABEL note="由于微力没有开放源代码，因为该 Dockerfile 会从微�
 
 WORKDIR /app
 
-RUN echo Version: ${TARGET_VERSION}\nPlatform: ${TARGET_PLATFORM_OS}/${TARGET_PLATFORM_ARCH} && \
+RUN printf 'Version: %s\nPlatform: %s/%s\n' "$TARGET_VERSION" "$TARGET_PLATFORM_OS" "$TARGET_PLATFORM_ARCH" && \
     mkdir -p -- bin var tmp && \
     wget -q "http://releases-cdn.verysync.com/releases/${TARGET_VERSION}/verysync-${TARGET_PLATFORM_OS}-${TARGET_PLATFORM_ARCH}-${TARGET_VERSION}.tar.gz" && \
     tar xzvf verysync-${TARGET_PLATFORM_OS}-${TARGET_PLATFORM_ARCH}-${TARGET_VERSION}.tar.gz --strip-components=1 -C tmp && \

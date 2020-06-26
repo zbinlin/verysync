@@ -15,7 +15,7 @@ jobs:
                   TARGET_PLATFORM_OS: linux
                   TARGET_PLATFORM_ARCH: amd64
               run: |
-                  TARGET_VERSION=${GITHUB_REF##*/}
+                  export TARGET_VERSION=${GITHUB_REF##*/}
                   docker build . --file Dockerfile --tag "${GITHUB_REPOSITORY}"
             - name: Login Docker Hub
               env:
