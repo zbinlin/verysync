@@ -12,6 +12,7 @@
 * v1.3.1
 * v1.3.5
 * v1.4.4
+* v1.5.5
 
 ### Target Platform OS (TARGET_PLATFORM_OS)
 
@@ -38,19 +39,16 @@ http://releases-cdn.verysync.com/releases/{VERSION}/
 
 ## 使用
 
-首先需要安装 docker（或者 podman），如果使用 docker-compose 的话，需要安装 docker-compose 的最新版
+首先需要安装 docker（或者 podman），如果使用 docker-compose 的话，需要安装 docker-compose 的最新版。
 
-### 从 Hub.docker.com 拉取镜像
+可以从 Hub.docker.com 拉取镜像：
 
 ```bash
 # 使用 Docker
 docker pull zbinlin/verysync:latest
-
-# 使用 podman
-podman pull zbinlin/verysync:latest
 ```
 
-### 手动构建
+或者手动来构建：
 
 ```bash
 git clone https://github.com/zbinlin/verysync.git
@@ -69,7 +67,9 @@ docker build \
 ### 运行
 
 ```bash
-docker run --mount "type=bind,source=./data,target=/app/var" \
+docker run \
+    --mount "type=bind,source=${PWD}/config,target=/app/var" \
+    --mount "type=bind,source=${PWD}/data,target=/mnt/data" \
     --publish "8886:8886" \
     --publish "22330:22330" \
     --publish "443:443" \

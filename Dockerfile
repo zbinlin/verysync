@@ -18,15 +18,15 @@ LABEL note="由于微力没有开放源代码，因为该 Dockerfile 会从微�
 
 WORKDIR /app
 
+RUN adduser -h /app -D verysync
+
+USER verysync:verysync
+
 RUN printf 'Version: %s\nPlatform: %s/%s\n' "$TARGET_VERSION" "$TARGET_PLATFORM_OS" "$TARGET_PLATFORM_ARCH" && \
     mkdir -p -- bin var tmp && \
     wget -q "http://releases-cdn.verysync.com/releases/${TARGET_VERSION}/verysync-${TARGET_PLATFORM_OS}-${TARGET_PLATFORM_ARCH}-${TARGET_VERSION}.tar.gz" && \
     tar xzvf verysync-${TARGET_PLATFORM_OS}-${TARGET_PLATFORM_ARCH}-${TARGET_VERSION}.tar.gz --strip-components=1 -C tmp && \
     mv tmp/verysync bin/ && rm -rf tmp verysync-${TARGET_PLATFORM_OS}-${TARGET_PLATFORM_ARCH}-${TARGET_VERSION}.tar.gz
-
-RUN adduser -h /app/var -D verysync
-
-USER verysync:verysync
 
 # * TCP 8886 Web GUI
 # * TCP 22330 端口进行数据交换进
