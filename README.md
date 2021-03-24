@@ -13,6 +13,7 @@
 * v1.3.5
 * v1.4.4
 * v1.5.5
+* v2.5.4
 
 ### Target Platform OS (TARGET_PLATFORM_OS)
 

@@ -11,7 +11,7 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - id: set-tag-name-into-env
-              run: echo "::set-env name=TAG_NAME::${GITHUB_REF##*/}"
+              run: echo "TAG_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
             - name: Build the Docker image
               env:
                   TARGET_VERSION: ${{ env.TAG_NAME }}
