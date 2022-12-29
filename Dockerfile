@@ -1,7 +1,7 @@
-FROM alpine:3.13
+FROM alpine:3.17
 
-RUN echo https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.13/main > /etc/apk/repositories; \
-    echo https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.13/community >> /etc/apk/repositories
+RUN echo https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.17/main > /etc/apk/repositories; \
+    echo https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.17/community >> /etc/apk/repositories
 
 RUN apk add --no-cache tzdata && \
     ln -fsT /usr/share/zoneinfo/PRC /etc/localtime && \

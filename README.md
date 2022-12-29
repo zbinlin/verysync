@@ -14,6 +14,7 @@
 * v1.4.4
 * v1.5.5
 * v2.5.4
+* v2.15.0
 
 ### Target Platform OS (TARGET_PLATFORM_OS)
 
@@ -58,7 +59,7 @@ cd verysync
 
 # 使用 docker 或 podman 直接构建并运行
 docker build \
-    --build-arg "TARGET_VERSION=v1.4.4" \
+    --build-arg "TARGET_VERSION=v2.15.0" \
     --build-arg "TARGET_PLATFORM_OS=linux" \
     --build-arg "TARGET_PLATFORM_ARCH=amd64" \
     -t zbinlin/verysync .
